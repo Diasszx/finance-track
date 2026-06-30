@@ -9,7 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Field } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import PasswordInput from '@/components/ui/password-input'
 
 const SignupPage = () => {
@@ -27,6 +30,20 @@ const SignupPage = () => {
           <PasswordInput />
           <PasswordInput placeholder="Digite sua senha novamente" />
         </CardContent>
+        <Field orientation="horizontal" className="mb-6 ml-6 w-[330px]">
+          <Checkbox id="terms-checkbox" name="terms-checkbox" />
+          <Label
+            htmlFor="terms-checkbox"
+            className="text-xs text-muted-foreground"
+          >
+            <span className="opacity-75">
+              Ao clicar em “Criar conta”, você aceita{' '}
+            </span>
+            <a href="#" className="text-white underline">
+              nosso termo de uso e política de privacidade
+            </a>
+          </Label>
+        </Field>
         <CardFooter>
           <Button className="w-full">Fazer login</Button>
         </CardFooter>
