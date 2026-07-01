@@ -84,7 +84,7 @@ const SignupPage = () => {
                 name="firstName"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
+                  <Field>
                     <FieldLabel
                       htmlFor="form-rhf-firstName"
                       className="text-foreground"
@@ -94,7 +94,6 @@ const SignupPage = () => {
                     <Input
                       {...field}
                       id="form-rhf-firstName"
-
                       placeholder="Digite seu nome"
                       autoComplete="off"
                     />
@@ -118,7 +117,6 @@ const SignupPage = () => {
                     <Input
                       {...field}
                       id="form-rhf-lastName"
-
                       placeholder="Digite seu sobrenome"
                       autoComplete="off"
                     />
@@ -132,7 +130,7 @@ const SignupPage = () => {
                 name="email"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
+                  <Field>
                     <FieldLabel
                       htmlFor="form-rhf-email"
                       className="text-foreground"
@@ -142,7 +140,6 @@ const SignupPage = () => {
                     <Input
                       {...field}
                       id="form-rhf-email"
-
                       placeholder="Digite seu e-mail"
                       autoComplete="off"
                     />
@@ -156,7 +153,7 @@ const SignupPage = () => {
                 name="password"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
+                  <Field>
                     <FieldLabel
                       htmlFor="form-rhf-password"
                       className="text-foreground"
@@ -166,7 +163,6 @@ const SignupPage = () => {
                     <PasswordInput
                       {...field}
                       id="form-rhf-password"
-
                       placeholder="Digite sua senha"
                       autoComplete="off"
                     />
@@ -180,7 +176,7 @@ const SignupPage = () => {
                 name="confirmPassword"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
+                  <Field>
                     <FieldLabel
                       htmlFor="form-rhf-confirmPassword"
                       className="text-foreground"
@@ -190,7 +186,6 @@ const SignupPage = () => {
                     <PasswordInput
                       {...field}
                       id="form-rhf-confirmPassword"
-
                       placeholder="Digite sua senha novamente"
                       autoComplete="off"
                     />
@@ -204,14 +199,13 @@ const SignupPage = () => {
                 name="terms"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
+                  <Field>
                     <div className="flex items-start gap-2">
                       <Checkbox
                         id="terms-checkbox"
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />
-
                       <Label
                         htmlFor="terms-checkbox"
                         className="text-xs text-muted-foreground"
@@ -224,7 +218,6 @@ const SignupPage = () => {
                         </a>
                       </Label>
                     </div>
-
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
