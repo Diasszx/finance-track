@@ -94,7 +94,7 @@ const SignupPage = () => {
                     <Input
                       {...field}
                       id="form-rhf-firstName"
-                      aria-invalid={fieldState.invalid}
+
                       placeholder="Digite seu nome"
                       autoComplete="off"
                     />
@@ -118,7 +118,7 @@ const SignupPage = () => {
                     <Input
                       {...field}
                       id="form-rhf-lastName"
-                      aria-invalid={fieldState.invalid}
+
                       placeholder="Digite seu sobrenome"
                       autoComplete="off"
                     />
@@ -142,7 +142,7 @@ const SignupPage = () => {
                     <Input
                       {...field}
                       id="form-rhf-email"
-                      aria-invalid={fieldState.invalid}
+
                       placeholder="Digite seu e-mail"
                       autoComplete="off"
                     />
@@ -166,7 +166,7 @@ const SignupPage = () => {
                     <PasswordInput
                       {...field}
                       id="form-rhf-password"
-                      aria-invalid={fieldState.invalid}
+
                       placeholder="Digite sua senha"
                       autoComplete="off"
                     />
@@ -190,7 +190,7 @@ const SignupPage = () => {
                     <PasswordInput
                       {...field}
                       id="form-rhf-confirmPassword"
-                      aria-invalid={fieldState.invalid}
+
                       placeholder="Digite sua senha novamente"
                       autoComplete="off"
                     />
@@ -210,7 +210,6 @@ const SignupPage = () => {
                         id="terms-checkbox"
                         checked={field.value}
                         onCheckedChange={field.onChange}
-                        aria-invalid={fieldState.invalid}
                       />
 
                       <Label
