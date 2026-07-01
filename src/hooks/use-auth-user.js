@@ -2,12 +2,12 @@ import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { userMutations } from '@/keys/mutations'
-import { loginUser } from '@/services/users'
+import { authUser } from '@/services/users'
 
-export const useLoginUser = () => {
+export const useAuthUser = () => {
   return useMutation({
-    mutationKey: userMutations.login(),
-    mutationFn: (user) => loginUser(user),
+    mutationKey: userMutations.auth(),
+    mutationFn: (user) => authUser(user),
     onSuccess: () => {
       toast.success('Usuário logado com sucesso!')
     },

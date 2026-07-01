@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import PasswordInput from '@/components/ui/password-input'
-import { useLoginUser } from '@/hooks/use-login-user'
+import { useAuthUser } from '@/hooks/use-auth-user'
 
 const loginSchema = z.object({
   email: z
@@ -35,7 +35,7 @@ const loginSchema = z.object({
 
 const LoginPage = () => {
   const navigate = useNavigate()
-  const { mutate: loginUserMutation, isPending: isLoggingIn } = useLoginUser()
+  const { mutate: authUserMutation, isPending: isLoggingIn } = useAuthUser()
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -46,7 +46,7 @@ const LoginPage = () => {
   })
 
   const onSubmit = (data) => {
-    loginUserMutation(data, {
+    authUserMutation(data, {
       onSuccess: () => {
         form.reset()
         navigate('/home')
