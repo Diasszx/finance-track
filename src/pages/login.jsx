@@ -45,7 +45,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center">
+    <div className="flex h-screen w-screen flex-col items-center justify-center gap-3">
       <Card className="w-[500px]">
         <CardHeader className="items-center">
           <CardTitle>Entre na sua conta</CardTitle>

@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
@@ -22,6 +23,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import PasswordInput from '@/components/ui/password-input'
+import useCreateUser from '@/hooks/use-add-user'
 
 const signupSchema = z
   .object({
@@ -54,6 +56,9 @@ const signupSchema = z
   })
 
 const SignupPage = () => {
+  const { mutate: createUserMutation, isPending: isCreating } = useCreateUser()
+  const navigate = useNavigate()
+
   const form = useForm({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -68,10 +73,23 @@ const SignupPage = () => {
 
   const onSubmit = (data) => {
     console.log(data)
+
+    const newUser = {
+      first_name: data.firstName,
+      last_name: data.lastName,
+      ...data,
+    }
+
+    createUserMutation(newUser, {
+      onSuccess: () => {
+        form.reset()
+        navigate('/login')
+      },
+    })
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center">
+    <div className="flex h-screen w-screen flex-col items-center justify-center gap-3">
       <Card className="max-h-[85vh] w-[500px] overflow-y-auto">
         <CardHeader className="items-center">
           <CardTitle>Crie a sua conta</CardTitle>
@@ -228,8 +246,17 @@ const SignupPage = () => {
           </form>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full" form="form-signup">
-            Fazer login
+          <Button
+            type="submit"
+            className="w-full"
+            form="form-signup"
+            disabled={isCreating}
+          >
+            {isCreating ? (
+              <Loader className="animate-spin text-white" />
+            ) : (
+              'Criar conta'
+            )}
           </Button>
         </CardFooter>
       </Card>
