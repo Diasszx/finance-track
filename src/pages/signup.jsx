@@ -234,7 +234,7 @@ const SignupPage = () => {
         </CardFooter>
       </Card>
       <div className="flex items-center justify-center">
-        <p className="text-center opacity-50">Ainda não possui uma conta?</p>
+        <p className="text-center opacity-50">Já possui uma conta?</p>
         <Button variant="link" asChild>
           <Link to="/login" className="underline">
             Faça login
