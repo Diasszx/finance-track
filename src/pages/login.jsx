@@ -19,13 +19,15 @@ import {
   FieldLabel,
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import PasswordInput from '@/components/ui/password-input'
 
 const loginSchema = z.object({
-  email: z.string().email({ message: 'e-mail inválido.' }).min(1, {
-    message: 'Insira o seu e-mail',
-  }),
+  email: z
+    .string()
+    .min(1, { message: 'Insira seu e-mail' })
+    .email({ message: 'E-mail inválido.' }),
   password: z.string().min(1, {
-    message: 'Senha inválida',
+    message: 'Insira sua senha.',
   }),
 })
 
@@ -76,7 +78,7 @@ const LoginPage = () => {
                 render={({ field, fieldState }) => (
                   <Field className="gap-2">
                     <FieldLabel htmlFor="form-login-password">Senha</FieldLabel>
-                    <Input
+                    <PasswordInput
                       {...field}
                       id="form-login-password"
                       placeholder="Insira sua senha"
