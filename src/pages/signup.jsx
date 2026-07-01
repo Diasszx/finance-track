@@ -78,7 +78,7 @@ const SignupPage = () => {
           <CardDescription>Insira seus dados abaixo.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form id="form-rhf" onSubmit={form.handleSubmit(onSubmit)}>
+          <form id="form-signup" onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup className="gap-2">
               <Controller
                 name="firstName"
@@ -86,14 +86,14 @@ const SignupPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel
-                      htmlFor="form-rhf-firstName"
+                      htmlFor="form-signup-firstName"
                       className="text-foreground"
                     >
                       Nome
                     </FieldLabel>
                     <Input
                       {...field}
-                      id="form-rhf-firstName"
+                      id="form-signup-firstName"
                       placeholder="Digite seu nome"
                       autoComplete="off"
                     />
@@ -109,14 +109,14 @@ const SignupPage = () => {
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel
-                      htmlFor="form-rhf-lastName"
+                      htmlFor="form-signup-lastName"
                       className="text-foreground"
                     >
                       Sobrenome
                     </FieldLabel>
                     <Input
                       {...field}
-                      id="form-rhf-lastName"
+                      id="form-signup-lastName"
                       placeholder="Digite seu sobrenome"
                       autoComplete="off"
                     />
@@ -132,14 +132,14 @@ const SignupPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel
-                      htmlFor="form-rhf-email"
+                      htmlFor="form-signup-email"
                       className="text-foreground"
                     >
                       E-mail
                     </FieldLabel>
                     <Input
                       {...field}
-                      id="form-rhf-email"
+                      id="form-signup-email"
                       placeholder="Digite seu e-mail"
                       autoComplete="off"
                     />
@@ -155,14 +155,14 @@ const SignupPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel
-                      htmlFor="form-rhf-password"
+                      htmlFor="form-signup-password"
                       className="text-foreground"
                     >
                       Senha
                     </FieldLabel>
                     <PasswordInput
                       {...field}
-                      id="form-rhf-password"
+                      id="form-signup-password"
                       placeholder="Digite sua senha"
                       autoComplete="off"
                     />
@@ -178,14 +178,14 @@ const SignupPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel
-                      htmlFor="form-rhf-confirmPassword"
+                      htmlFor="form-signup-confirmPassword"
                       className="text-foreground"
                     >
                       Confirme a Senha
                     </FieldLabel>
                     <PasswordInput
                       {...field}
-                      id="form-rhf-confirmPassword"
+                      id="form-signup-confirmPassword"
                       placeholder="Digite sua senha novamente"
                       autoComplete="off"
                     />
@@ -228,7 +228,7 @@ const SignupPage = () => {
           </form>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full" form="form-rhf">
+          <Button type="submit" className="w-full" form="form-signup">
             Fazer login
           </Button>
         </CardFooter>
