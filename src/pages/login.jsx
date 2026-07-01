@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import z from 'zod'
 
 import { Button } from '@/components/ui/button'
@@ -20,6 +21,7 @@ import {
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import PasswordInput from '@/components/ui/password-input'
+import { useLoginUser } from '@/hooks/use-login-user'
 
 const loginSchema = z.object({
   email: z
@@ -32,6 +34,9 @@ const loginSchema = z.object({
 })
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+  const { mutate: loginUserMutation, isPending: isLoggingIn } = useLoginUser()
+
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -41,7 +46,12 @@ const LoginPage = () => {
   })
 
   const onSubmit = (data) => {
-    console.log(data)
+    loginUserMutation(data, {
+      onSuccess: () => {
+        form.reset()
+        navigate('/home')
+      },
+    })
   }
 
   return (
@@ -94,8 +104,17 @@ const LoginPage = () => {
           </form>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full" form="form-login">
-            Fazer Login
+          <Button
+            type="submit"
+            className="w-full"
+            form="form-login"
+            disabled={isLoggingIn}
+          >
+            {isLoggingIn ? (
+              <Loader className="animate-spin text-white" />
+            ) : (
+              'Fazer Login'
+            )}
           </Button>
         </CardFooter>
       </Card>

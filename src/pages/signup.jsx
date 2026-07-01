@@ -102,7 +102,7 @@ const SignupPage = () => {
                 name="firstName"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field>
+                  <Field className="gap-2">
                     <FieldLabel
                       htmlFor="form-signup-firstName"
                       className="text-foreground"
@@ -125,7 +125,7 @@ const SignupPage = () => {
                 name="lastName"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
+                  <Field className="gap-2">
                     <FieldLabel
                       htmlFor="form-signup-lastName"
                       className="text-foreground"
@@ -148,7 +148,7 @@ const SignupPage = () => {
                 name="email"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field>
+                  <Field className="gap-2">
                     <FieldLabel
                       htmlFor="form-signup-email"
                       className="text-foreground"
@@ -171,7 +171,7 @@ const SignupPage = () => {
                 name="password"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field>
+                  <Field className="gap-2">
                     <FieldLabel
                       htmlFor="form-signup-password"
                       className="text-foreground"
@@ -194,7 +194,7 @@ const SignupPage = () => {
                 name="confirmPassword"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field>
+                  <Field className="gap-2">
                     <FieldLabel
                       htmlFor="form-signup-confirmPassword"
                       className="text-foreground"
@@ -218,7 +218,7 @@ const SignupPage = () => {
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field>
-                    <div className="flex items-start gap-2">
+                    <div className="mt-2 flex items-start gap-2">
                       <Checkbox
                         id="terms-checkbox"
                         checked={field.value}
