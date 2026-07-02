@@ -3,7 +3,6 @@ import { Loader } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router'
-import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -25,37 +24,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import PasswordInput from '@/components/ui/password-input'
 import useCreateUser from '@/hooks/use-add-user'
+import { signupSchema } from '@/schemas/signup-schema'
 import { getAuthUser } from '@/services/users'
-
-const signupSchema = z
-  .object({
-    firstName: z.string().trim().min(1, {
-      message: 'O nome é obrigatório.',
-    }),
-    lastName: z.string().trim().min(1, {
-      message: 'O sobrenome é obrigatório.',
-    }),
-    email: z
-      .string()
-      .email({
-        message: 'O email é inválido.',
-      })
-      .trim()
-      .min(1, {
-        message: 'O email é obrigatório.',
-      }),
-    password: z.string().min(6, {
-      message: 'A senha deve ter pelo menos 6 caracteres',
-    }),
-    confirmPassword: z.string().min(1, { message: 'Confirme sua senha.' }),
-    terms: z.boolean().refine((isCheck) => isCheck === true, {
-      message: 'Você precisa aceitar os termos.',
-    }),
-  })
-  .refine(({ password, confirmPassword }) => password === confirmPassword, {
-    message: 'As senhas não coincidem',
-    path: ['confirmPassword'],
-  })
 
 const SignupPage = () => {
   const [user, setUser] = useState(null)

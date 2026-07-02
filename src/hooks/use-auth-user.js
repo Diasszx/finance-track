@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { userMutations } from '@/keys/mutations'
+import { setAcessToken, setRefreshToken } from '@/lib/token'
 import { authUser } from '@/services/users'
 
 export const useAuthUser = () => {
@@ -11,8 +12,8 @@ export const useAuthUser = () => {
     onSuccess: (authUser) => {
       const accessToken = authUser.tokens.accessToken
       const refreshToken = authUser.tokens.refreshToken
-      localStorage.setItem('accessToken', accessToken)
-      localStorage.setItem('refreshToken', refreshToken)
+      setAcessToken(accessToken)
+      setRefreshToken(refreshToken)
       toast.success('Usuário logado com sucesso!')
     },
     onError: (error) => {

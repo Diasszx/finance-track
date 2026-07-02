@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { getAccessToken } from './token'
+
 const API_URL = 'https://fullstackclub-finance-dashboard-api.onrender.com/api'
 
 const api = axios.create({
@@ -16,7 +18,7 @@ api.interceptors.request.use((config) => {
   //   return config
   // }
 
-  const accessToken = localStorage.getItem('accessToken')
+  const accessToken = getAccessToken()
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`

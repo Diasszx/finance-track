@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
-import z from 'zod'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -22,16 +21,7 @@ import {
 import { Input } from '@/components/ui/input'
 import PasswordInput from '@/components/ui/password-input'
 import { useAuthUser } from '@/hooks/use-auth-user'
-
-const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: 'Insira seu e-mail' })
-    .email({ message: 'E-mail inválido.' }),
-  password: z.string().min(1, {
-    message: 'Insira sua senha.',
-  }),
-})
+import { loginSchema } from '@/schemas/login-schema'
 
 const LoginPage = () => {
   const navigate = useNavigate()
