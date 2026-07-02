@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
@@ -24,6 +25,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import PasswordInput from '@/components/ui/password-input'
 import useCreateUser from '@/hooks/use-add-user'
+import { getAuthUser } from '@/services/users'
 
 const signupSchema = z
   .object({
@@ -56,8 +58,9 @@ const signupSchema = z
   })
 
 const SignupPage = () => {
+  const [user, setUser] = useState(null)
   const { mutate: createUserMutation, isPending: isCreating } = useCreateUser()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const form = useForm({
     resolver: zodResolver(signupSchema),
@@ -81,13 +84,29 @@ const SignupPage = () => {
     }
 
     createUserMutation(newUser, {
-      onSuccess: () => {
+      onSuccess: (createdUser) => {
+        setUser(createdUser.user)
         form.reset()
-        navigate('/login')
+        // navigate('/home')
       },
     })
   }
 
+  useEffect(() => {
+    const init = async () => {
+      const accessToken = localStorage.getItem('accessToken')
+      const refreshToken = localStorage.getItem('refreshToken')
+      if (!accessToken && !refreshToken) return
+
+      const user = await getAuthUser()
+      setUser(user)
+    }
+    init()
+  }, [])
+  if (user) {
+    console.log(user)
+    return <h1>Olá, {user.first_name}</h1>
+  }
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-3">
       <Card className="max-h-[85vh] w-[500px] overflow-y-auto">

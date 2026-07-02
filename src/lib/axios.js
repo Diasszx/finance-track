@@ -9,6 +9,22 @@ const api = axios.create({
   },
 })
 
+api.interceptors.request.use((config) => {
+  // const publicRoutes = ['/users/login', '/users/register']
+
+  // if (publicRoutes.includes(config.url)) {
+  //   return config
+  // }
+
+  const accessToken = localStorage.getItem('accessToken')
+
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`
+  }
+
+  return config
+})
+
 export const apiFetch = async (endpoint, options = {}) => {
   try {
     const response = await api({ url: endpoint, ...options })

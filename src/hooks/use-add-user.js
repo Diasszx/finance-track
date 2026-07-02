@@ -8,7 +8,11 @@ export const useCreateUser = () => {
   return useMutation({
     mutationKey: userMutations.create(),
     mutationFn: (newUser) => createUser(newUser),
-    onSuccess: () => {
+    onSuccess: (createdUser) => {
+      const accessToken = createdUser.tokens.accessToken
+      const refreshToken = createdUser.tokens.refreshToken
+      localStorage.setItem('accessToken', accessToken)
+      localStorage.setItem('refreshToken', refreshToken)
       toast.success('Usuário criado com sucesso!')
     },
     onError: (error) => {

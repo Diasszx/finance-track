@@ -8,7 +8,11 @@ export const useAuthUser = () => {
   return useMutation({
     mutationKey: userMutations.auth(),
     mutationFn: (user) => authUser(user),
-    onSuccess: () => {
+    onSuccess: (authUser) => {
+      const accessToken = authUser.tokens.accessToken
+      const refreshToken = authUser.tokens.refreshToken
+      localStorage.setItem('accessToken', accessToken)
+      localStorage.setItem('refreshToken', refreshToken)
       toast.success('Usuário logado com sucesso!')
     },
     onError: (error) => {
