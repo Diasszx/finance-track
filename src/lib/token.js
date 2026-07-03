@@ -10,8 +10,7 @@ export const getRefreshToken = () =>
 export const setRefreshToken = (refreshToken) =>
   localStorage.setItem(storageKeys.refreshToken, refreshToken)
 
-export const logout = () => {
+export const removeTokens = () => {
   localStorage.removeItem(storageKeys.accessToken)
   localStorage.removeItem(storageKeys.refreshToken)
-  window.location.href = '/login'
 }

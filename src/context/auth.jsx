@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { storageKeys } from '@/constants/storage-keys'
 import useCreateUser from '@/hooks/use-add-user'
 import { useAuthUser } from '@/hooks/use-auth-user'
-import { getAccessToken, getRefreshToken, logout } from '@/lib/token'
+import { getAccessToken, getRefreshToken, removeTokens } from '@/lib/token'
 import { getAuthUser } from '@/services/users'
 
 export const AuthContext = createContext({
@@ -13,6 +13,7 @@ export const AuthContext = createContext({
   isSigningUp: false,
   isLoggingIn: false,
   isInitializing: true,
+  signOut: () => {},
 })
 
 export const useAuthContext = () => useContext(AuthContext)
@@ -38,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
       } catch (error) {
         console.log(error)
         setUser(null)
-        logout()
+        removeTokens()
       } finally {
         setIsInitializing(false)
       }
@@ -54,15 +55,22 @@ export const AuthContextProvider = ({ children }) => {
       password: data.password,
     }
 
-    const createdUser = await createUserMutation(newUser)
-    setUser(createdUser.user)
-    return createdUser.user
+    await createUserMutation(newUser)
+    const createdUser = await getAuthUser()
+    setUser(createdUser)
+    return createdUser
   }
 
   const login = async (data) => {
-    const loggedUser = await authUserMutation(data)
-    setUser(loggedUser.user)
-    return loggedUser.user
+    await authUserMutation(data)
+    const authUser = await getAuthUser()
+    setUser(authUser)
+    return authUser
+  }
+
+  const signOut = () => {
+    setUser(null)
+    removeTokens()
   }
 
   return (
@@ -74,6 +82,7 @@ export const AuthContextProvider = ({ children }) => {
         signup,
         isSigningUp,
         isInitializing,
+        signOut,
       }}
     >
       {children}

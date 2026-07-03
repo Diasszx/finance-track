@@ -5,7 +5,7 @@ import { useAuthContext } from '@/context/auth'
 
 const HomePage = () => {
   const navigate = useNavigate()
-  const { user, isInitializing } = useAuthContext()
+  const { user, isInitializing, signOut } = useAuthContext()
 
   useEffect(() => {
     if (!isInitializing && !user) {
@@ -14,8 +14,15 @@ const HomePage = () => {
   }, [isInitializing, user, navigate])
 
   if (isInitializing) return null
+  if (!user) return null
 
-  return <h1>Ola, {user.first_name}</h1>
+  return (
+    <div>
+      <h1>Ola, {user.first_name}</h1>
+
+      <button onClick={signOut}>sair</button>
+    </div>
+  )
 }
 
 export default HomePage

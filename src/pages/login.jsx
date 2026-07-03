@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
+import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 
@@ -40,11 +41,13 @@ const LoginPage = () => {
     navigate('/')
   }
 
-  if (isInitializing) return null
+  useEffect(() => {
+    if (!isInitializing && user) {
+      navigate('/')
+    }
+  }, [isInitializing, user, navigate])
 
-  if (user) {
-    navigate('/')
-  }
+  if (isInitializing) return null
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-3">
