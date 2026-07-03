@@ -1,13 +1,13 @@
-import { apiFetch } from '@/lib/axios'
+import { protectedApiFetch, publicApi } from '@/lib/axios'
 
 export const createUser = async (user) => {
-  return apiFetch('/users', { method: 'POST', data: user })
+  return publicApi('/users', { method: 'POST', data: user })
 }
 
 export const authUser = async (user) => {
-  return apiFetch('/users/login', { method: 'POST', data: user })
+  return publicApi('/users/login', { method: 'POST', data: user })
 }
 
 export const getAuthUser = async () => {
-  return apiFetch('/users/me', { method: 'GET' })
+  return protectedApiFetch('/users/me', { method: 'GET' })
 }

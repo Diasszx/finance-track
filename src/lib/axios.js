@@ -4,20 +4,21 @@ import { getAccessToken } from './token'
 
 const API_URL = 'https://fullstackclub-finance-dashboard-api.onrender.com/api'
 
-const api = axios.create({
+const publicApi = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 })
 
-api.interceptors.request.use((config) => {
-  // const publicRoutes = ['/users/login', '/users/register']
+const protectedApi = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 
-  // if (publicRoutes.includes(config.url)) {
-  //   return config
-  // }
-
+protectedApi.interceptors.request.use((config) => {
   const accessToken = getAccessToken()
 
   if (accessToken) {
@@ -27,9 +28,14 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-export const apiFetch = async (endpoint, options = {}) => {
+export const publicApiFetch = async (endpoint, options = {}) => {
+  const response = await publicApi({ url: endpoint, ...options })
+  return response.data
+}
+
+export const protectedApiFetch = async (endpoint, options = {}) => {
   try {
-    const response = await api({ url: endpoint, ...options })
+    const response = await protectedApi({ url: endpoint, ...options })
     return response.data
   } catch (error) {
     if (import.meta.env.DEV) {
