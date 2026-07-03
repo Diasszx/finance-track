@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -24,7 +24,8 @@ import { useAuthContext } from '@/context/auth'
 import { loginSchema } from '@/schemas/login-schema'
 
 const LoginPage = () => {
-  const { user, login, isLoggingIn } = useAuthContext()
+  const { user, login, isLoggingIn, isInitializing } = useAuthContext()
+  const navigate = useNavigate()
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -34,11 +35,15 @@ const LoginPage = () => {
     },
   })
 
-  const onSubmit = (data) => login(data)
+  const onSubmit = async (data) => {
+    await login(data)
+    navigate('/')
+  }
+
+  if (isInitializing) return null
 
   if (user) {
-    console.log(user)
-    return <h1>Olá, {user.first_name}</h1>
+    navigate('/')
   }
 
   return (

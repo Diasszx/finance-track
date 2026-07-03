@@ -12,18 +12,23 @@ export const AuthContext = createContext({
   signup: () => {},
   isSigningUp: false,
   isLoggingIn: false,
+  isInitializing: true,
 })
 
 export const useAuthContext = () => useContext(AuthContext)
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-  const { mutate: createUserMutation, isPending: isSigningUp } = useCreateUser()
-  const { mutate: authUserMutation, isPending: isLoggingIn } = useAuthUser()
+  const [isInitializing, setIsInitializing] = useState(true)
+  const { mutateAsync: createUserMutation, isPending: isSigningUp } =
+    useCreateUser()
+  const { mutateAsync: authUserMutation, isPending: isLoggingIn } =
+    useAuthUser()
 
   useEffect(() => {
     const init = async () => {
       try {
+        setIsInitializing(true)
         const accessToken = getAccessToken(storageKeys.accessToken)
         const refreshToken = getRefreshToken(storageKeys.refreshToken)
         if (!accessToken && !refreshToken) return
@@ -32,13 +37,16 @@ export const AuthContextProvider = ({ children }) => {
         setUser(user)
       } catch (error) {
         console.log(error)
+        setUser(null)
         logout()
+      } finally {
+        setIsInitializing(false)
       }
     }
     init()
   }, [])
 
-  const signup = (data) => {
+  const signup = async (data) => {
     const newUser = {
       first_name: data.firstName,
       last_name: data.lastName,
@@ -46,19 +54,15 @@ export const AuthContextProvider = ({ children }) => {
       password: data.password,
     }
 
-    createUserMutation(newUser, {
-      onSuccess: (createdUser) => {
-        setUser(createdUser.user)
-      },
-    })
+    const createdUser = await createUserMutation(newUser)
+    setUser(createdUser.user)
+    return createdUser.user
   }
 
-  const login = (data) => {
-    authUserMutation(data, {
-      onSuccess: (loggedUser) => {
-        setUser(loggedUser.user)
-      },
-    })
+  const login = async (data) => {
+    const loggedUser = await authUserMutation(data)
+    setUser(loggedUser.user)
+    return loggedUser.user
   }
 
   return (
@@ -69,6 +73,7 @@ export const AuthContextProvider = ({ children }) => {
         isLoggingIn,
         signup,
         isSigningUp,
+        isInitializing,
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -26,7 +26,8 @@ import { useAuthContext } from '@/context/auth'
 import { signupSchema } from '@/schemas/signup-schema'
 
 const SignupPage = () => {
-  const { signup, isSigningUp, user } = useAuthContext()
+  const { signup, isSigningUp, user, isInitializing } = useAuthContext()
+  const navigate = useNavigate()
 
   // const navigate = useNavigate()
 
@@ -42,11 +43,15 @@ const SignupPage = () => {
     },
   })
 
-  const onSubmit = (data) => signup(data)
+  const onSubmit = async (data) => {
+    await signup(data)
+    navigate('/')
+  }
+
+  if (isInitializing) return null
 
   if (user) {
-    console.log(user)
-    return <h1>Olá, {user.first_name}</h1>
+    navigate('/')
   }
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-3">
