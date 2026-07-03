@@ -10,6 +10,7 @@ export const useAuthUser = () => {
     mutationKey: userMutations.auth(),
     mutationFn: (user) => authUser(user),
     onSuccess: (authUser) => {
+      console.log(authUser)
       const accessToken = authUser.tokens.accessToken
       const refreshToken = authUser.tokens.refreshToken
       setAcessToken(accessToken)

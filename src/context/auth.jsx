@@ -1,8 +1,9 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
+import { storageKeys } from '@/constants/storage-keys'
 import useCreateUser from '@/hooks/use-add-user'
 import { useAuthUser } from '@/hooks/use-auth-user'
-import { logout } from '@/lib/token'
+import { getAccessToken, getRefreshToken, logout } from '@/lib/token'
 import { getAuthUser } from '@/services/users'
 
 export const AuthContext = createContext({
@@ -13,6 +14,8 @@ export const AuthContext = createContext({
   isLoggingIn: false,
 })
 
+export const useAuthContext = () => useContext(AuthContext)
+
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const { mutate: createUserMutation, isPending: isSigningUp } = useCreateUser()
@@ -21,8 +24,8 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const init = async () => {
       try {
-        const accessToken = localStorage.getItem('accessToken')
-        const refreshToken = localStorage.getItem('refreshToken')
+        const accessToken = getAccessToken(storageKeys.accessToken)
+        const refreshToken = getRefreshToken(storageKeys.refreshToken)
         if (!accessToken && !refreshToken) return
 
         const user = await getAuthUser()
@@ -36,8 +39,6 @@ export const AuthContextProvider = ({ children }) => {
   }, [])
 
   const signup = (data) => {
-    console.log(data)
-
     const newUser = {
       first_name: data.firstName,
       last_name: data.lastName,

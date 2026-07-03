@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
-import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 
@@ -21,11 +20,11 @@ import {
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import PasswordInput from '@/components/ui/password-input'
-import { AuthContext } from '@/context/auth'
+import { useAuthContext } from '@/context/auth'
 import { loginSchema } from '@/schemas/login-schema'
 
 const LoginPage = () => {
-  const { user, login, isLoggingIn } = useContext(AuthContext)
+  const { user, login, isLoggingIn } = useAuthContext()
 
   const form = useForm({
     resolver: zodResolver(loginSchema),

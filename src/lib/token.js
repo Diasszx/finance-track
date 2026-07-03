@@ -1,13 +1,17 @@
-export const getAccessToken = () => localStorage.getItem('accessToken')
-export const setAcessToken = (accessToken) =>
-  localStorage.setItem('accessToken', accessToken)
+import { storageKeys } from '@/constants/storage-keys'
 
-export const getRefreshToken = () => localStorage.getItem('refreshToken')
+export const getAccessToken = () =>
+  localStorage.getItem(storageKeys.accessToken)
+export const setAcessToken = (accessToken) =>
+  localStorage.setItem(storageKeys.accessToken, accessToken)
+
+export const getRefreshToken = () =>
+  localStorage.getItem(storageKeys.refreshToken)
 export const setRefreshToken = (refreshToken) =>
-  localStorage.setItem('refreshToken', refreshToken)
+  localStorage.setItem(storageKeys.refreshToken, refreshToken)
 
 export const logout = () => {
-  localStorage.removeItem('accessToken')
-  localStorage.removeItem('refreshToken')
+  localStorage.removeItem(storageKeys.accessToken)
+  localStorage.removeItem(storageKeys.refreshToken)
   window.location.href = '/login'
 }

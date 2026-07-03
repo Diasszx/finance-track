@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
-import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 
@@ -23,11 +22,11 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import PasswordInput from '@/components/ui/password-input'
-import { AuthContext } from '@/context/auth'
+import { useAuthContext } from '@/context/auth'
 import { signupSchema } from '@/schemas/signup-schema'
 
 const SignupPage = () => {
-  const { signup, isSigningUp, user } = useContext(AuthContext)
+  const { signup, isSigningUp, user } = useAuthContext()
 
   // const navigate = useNavigate()
 
