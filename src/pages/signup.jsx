@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 
@@ -23,13 +23,12 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import PasswordInput from '@/components/ui/password-input'
-import useCreateUser from '@/hooks/use-add-user'
+import { AuthContext } from '@/context/auth'
 import { signupSchema } from '@/schemas/signup-schema'
-import { getAuthUser } from '@/services/users'
 
 const SignupPage = () => {
-  const [user, setUser] = useState(null)
-  const { mutate: createUserMutation, isPending: isCreating } = useCreateUser()
+  const { signup, isSigningUp, user } = useContext(AuthContext)
+
   // const navigate = useNavigate()
 
   const form = useForm({
@@ -44,35 +43,8 @@ const SignupPage = () => {
     },
   })
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = (data) => signup(data)
 
-    const newUser = {
-      first_name: data.firstName,
-      last_name: data.lastName,
-      ...data,
-    }
-
-    createUserMutation(newUser, {
-      onSuccess: (createdUser) => {
-        setUser(createdUser.user)
-        form.reset()
-        // navigate('/home')
-      },
-    })
-  }
-
-  useEffect(() => {
-    const init = async () => {
-      const accessToken = localStorage.getItem('accessToken')
-      const refreshToken = localStorage.getItem('refreshToken')
-      if (!accessToken && !refreshToken) return
-
-      const user = await getAuthUser()
-      setUser(user)
-    }
-    init()
-  }, [])
   if (user) {
     console.log(user)
     return <h1>Olá, {user.first_name}</h1>
@@ -239,9 +211,9 @@ const SignupPage = () => {
             type="submit"
             className="w-full"
             form="form-signup"
-            disabled={isCreating}
+            disabled={isSigningUp}
           >
-            {isCreating ? (
+            {isSigningUp ? (
               <Loader className="animate-spin text-white" />
             ) : (
               'Criar conta'

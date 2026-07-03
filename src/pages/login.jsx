@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
+import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -20,12 +21,11 @@ import {
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import PasswordInput from '@/components/ui/password-input'
-import { useAuthUser } from '@/hooks/use-auth-user'
+import { AuthContext } from '@/context/auth'
 import { loginSchema } from '@/schemas/login-schema'
 
 const LoginPage = () => {
-  const navigate = useNavigate()
-  const { mutate: authUserMutation, isPending: isLoggingIn } = useAuthUser()
+  const { user, login, isLoggingIn } = useContext(AuthContext)
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -35,13 +35,11 @@ const LoginPage = () => {
     },
   })
 
-  const onSubmit = (data) => {
-    authUserMutation(data, {
-      onSuccess: () => {
-        form.reset()
-        navigate('/home')
-      },
-    })
+  const onSubmit = (data) => login(data)
+
+  if (user) {
+    console.log(user)
+    return <h1>Olá, {user.first_name}</h1>
   }
 
   return (
