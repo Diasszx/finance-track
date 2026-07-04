@@ -3,15 +3,38 @@ import { getRefreshToken } from '@/lib/token'
 
 export const UserService = {
   signup: async (user) => {
-    return publicApiFetch('/users', { method: 'POST', data: user })
+    const response = publicApiFetch('/users', { method: 'POST', data: user })
+    return {
+      id: response.id,
+      firstName: response.first_name,
+      lastName: response.last_name,
+      email: response.email,
+      tokens: response.tokens,
+    }
   },
 
   login: async (user) => {
-    return publicApiFetch('/users/login', { method: 'POST', data: user })
+    const response = await publicApiFetch('/users/login', {
+      method: 'POST',
+      data: user,
+    })
+    return {
+      id: response.id,
+      firstName: response.first_name,
+      lastName: response.last_name,
+      email: response.email,
+      tokens: response.tokens,
+    }
   },
 
   getMe: async () => {
-    return protectedApiFetch('/users/me', { method: 'GET' })
+    const response = await protectedApiFetch('/responses/me', { method: 'GET' })
+    return {
+      id: response.id,
+      firstName: response.first_name,
+      lastName: response.last_name,
+      email: response.email,
+    }
   },
 
   refreshToken: async () => {
