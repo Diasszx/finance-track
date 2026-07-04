@@ -3,8 +3,8 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { storageKeys } from '@/constants/storage-keys'
 import useCreateUser from '@/hooks/use-add-user'
 import { useAuthUser } from '@/hooks/use-auth-user'
+import { useGetMe } from '@/hooks/use-get-me'
 import { getAccessToken, getRefreshToken, removeTokens } from '@/lib/token'
-import { getAuthUser } from '@/services/users'
 
 export const AuthContext = createContext({
   user: null,
@@ -26,25 +26,35 @@ export const AuthContextProvider = ({ children }) => {
   const { mutateAsync: authUserMutation, isPending: isLoggingIn } =
     useAuthUser()
 
+  const { refetch: refetchMe } = useGetMe()
+
   useEffect(() => {
     const init = async () => {
       try {
         setIsInitializing(true)
+
         const accessToken = getAccessToken(storageKeys.accessToken)
         const refreshToken = getRefreshToken(storageKeys.refreshToken)
-        if (!accessToken && !refreshToken) return
 
-        const user = await getAuthUser()
-        setUser(user)
+        if (!accessToken && !refreshToken) {
+          setUser(null)
+          return
+        }
+
+        const { data: authUser } = await refetchMe()
+
+        setUser(authUser)
       } catch (error) {
         console.log(error)
         setUser(null)
+        removeTokens()
       } finally {
         setIsInitializing(false)
       }
     }
+
     init()
-  }, [])
+  }, [refetchMe])
 
   const signup = async (data) => {
     const newUser = {
@@ -55,14 +65,14 @@ export const AuthContextProvider = ({ children }) => {
     }
 
     await createUserMutation(newUser)
-    const createdUser = await getAuthUser()
+    const { data: createdUser } = await refetchMe()
     setUser(createdUser)
     return createdUser
   }
 
   const login = async (data) => {
     await authUserMutation(data)
-    const authUser = await getAuthUser()
+    const { data: authUser } = await refetchMe()
     setUser(authUser)
     return authUser
   }

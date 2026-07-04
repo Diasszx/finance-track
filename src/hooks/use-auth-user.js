@@ -3,12 +3,12 @@ import { toast } from 'sonner'
 
 import { userMutations } from '@/keys/mutations'
 import { setAcessToken, setRefreshToken } from '@/lib/token'
-import { authUser } from '@/services/users'
+import { UserService } from '@/services/users'
 
 export const useAuthUser = () => {
   return useMutation({
     mutationKey: userMutations.auth(),
-    mutationFn: (user) => authUser(user),
+    mutationFn: (user) => UserService.login(user),
     onSuccess: (authUser) => {
       const accessToken = authUser.tokens.accessToken
       const refreshToken = authUser.tokens.refreshToken

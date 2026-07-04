@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { refreshAuth } from '@/services/users'
+import { UserService } from '@/services/users'
 
 import {
   getAccessToken,
@@ -55,7 +55,7 @@ protectedApi.interceptors.response.use(
     ) {
       request._rety = true
       try {
-        const response = await refreshAuth()
+        const response = await UserService.refreshToken()
         const accessToken = response.accessToken
         const refreshToken = response.refreshToken
         setAcessToken(accessToken)
