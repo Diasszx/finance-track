@@ -20,6 +20,12 @@ const HomePage = () => {
   return (
     <div>
       <Header />
+      <div className="p-8">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Dashboard</h2>
+          <div className="flex items-center gap-2"></div>
+        </div>
+      </div>
     </div>
   )
 }
