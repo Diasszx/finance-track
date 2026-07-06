@@ -50,7 +50,7 @@ export const UserService = {
    * @returns {Object} Usuário autenticado.
    */
   getMe: async () => {
-    const response = await protectedApiFetch('/responses/me', { method: 'GET' })
+    const response = await protectedApiFetch('/users/me', { method: 'GET' })
     return {
       id: response.id,
       firstName: response.first_name,
