@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
+import Header from '@/components/ui/header'
 import { useAuthContext } from '@/context/auth'
 
 const HomePage = () => {
   const navigate = useNavigate()
-  const { user, isInitializing, signOut } = useAuthContext()
+  const { user, isInitializing } = useAuthContext()
 
   useEffect(() => {
     if (!isInitializing && !user) {
@@ -18,9 +19,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>Ola, {user.first_name}</h1>
-
-      <button onClick={signOut}>sair</button>
+      <Header />
     </div>
   )
 }
