@@ -18,22 +18,22 @@ const Balance = () => {
       <BalanceItem
         label="Saldo"
         icon={<WalletIcon size={16} />}
-        amount={balance.balance}
+        amount={balance?.balance}
       ></BalanceItem>
       <BalanceItem
         label="Ganhos"
         icon={<TrendingUp className="text-primary-green" size={16} />}
-        amount={balance.earnings}
+        amount={balance?.earnings}
       ></BalanceItem>
       <BalanceItem
         label="Gastos"
         icon={<TrendingDown className="text-primary-red" size={16} />}
-        amount={balance.expenses}
+        amount={balance?.expenses}
       ></BalanceItem>
       <BalanceItem
         label="Investimentos"
         icon={<PiggyBank className="text-primary-blue" size={16} />}
-        amount={balance.investments}
+        amount={balance?.investments}
       ></BalanceItem>
     </div>
   )
