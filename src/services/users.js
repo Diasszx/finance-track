@@ -9,7 +9,7 @@ export const UserService = {
    * @param {string} input.lastName - Sobrenome do usuário.
    * @param {string} input.email - Email do usuário.
    * @param {string} input.password - Senha do usuário.
-   * @returns {Object} Usuário criado.
+   * @returns {object} Usuário criado.
    * @returns {string} response.tokens - Tokens de autenticação.
 
    */

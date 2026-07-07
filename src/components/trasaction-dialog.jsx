@@ -1,9 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PiggyBank, PlusIcon, TrendingDown, TrendingUp } from 'lucide-react'
+import {
+  Loader,
+  PiggyBank,
+  PlusIcon,
+  TrendingDown,
+  TrendingUp,
+} from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 
+import { useCreateTransaction } from '@/hooks/use-add-transaction'
 import { transactionSchema } from '@/schemas/transaction-schema'
 
 import { Button } from './ui/button'
@@ -22,6 +29,9 @@ import { Field, FieldError, FieldGroup, FieldLabel } from './ui/field'
 import { Input } from './ui/input'
 
 const TrasactionDialog = () => {
+  const { mutateAsync: createTransactionMutation, isPending: isCreating } =
+    useCreateTransaction()
+
   const [open, setOpen] = useState(false)
   const form = useForm({
     resolver: zodResolver(transactionSchema),
@@ -34,9 +44,20 @@ const TrasactionDialog = () => {
   })
 
   const onSubmit = async (data) => {
-    console.log(data)
-    form.reset()
-    setOpen(false)
+    try {
+      const input = {
+        name: data.title,
+        amount: data.amount,
+        date: data.date,
+        type: data.type,
+      }
+
+      await createTransactionMutation(input)
+      form.reset()
+      setOpen(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -186,13 +207,22 @@ const TrasactionDialog = () => {
                 type="button"
                 variant="outline"
                 className="w-full rounded-md bg-card px-4 py-2"
+                disabled={isCreating}
               >
                 Cancelar
               </Button>
             </DialogClose>
 
-            <Button type="submit" className="w-full rounded-md px-4 py-2">
-              Adicionar
+            <Button
+              type="submit"
+              className="w-full rounded-md px-4 py-2"
+              disabled={isCreating}
+            >
+              {isCreating ? (
+                <Loader className="animate-spin text-white" />
+              ) : (
+                'Adicionar'
+              )}
             </Button>
           </DialogFooter>
         </form>
