@@ -50,13 +50,29 @@ export const UserService = {
    * @returns {Object} Usuário autenticado.
    */
   getMe: async () => {
-    const response = await protectedApiFetch('/users/me', { method: 'GET' })
+    const response = await protectedApiFetch('/users/me')
     return {
       id: response.id,
       firstName: response.first_name,
       lastName: response.last_name,
       email: response.email,
     }
+  },
+  /**
+   * Retorna o balanço autenticado
+   * @param {object} input - Balanço a ser carregado
+   * @param {string} input.from - Data inicial (YYYY-MM-DD)
+   * @param {string} input.to - Data final (YYYY-MM-DD)
+   */
+  getBalance: async (input) => {
+    const queryParams = new URLSearchParams()
+
+    queryParams.set('from', input.from)
+    queryParams.set('to', input.to)
+
+    return await protectedApiFetch(
+      `/users/me/balance?${queryParams.toString()}`
+    )
   },
 
   refreshToken: async () => {
