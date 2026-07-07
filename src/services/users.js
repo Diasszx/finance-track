@@ -14,7 +14,11 @@ export const UserService = {
 
    */
   signup: async (user) => {
-    const response = publicApiFetch('/users', { method: 'POST', data: user })
+    const response = await publicApiFetch('/users', {
+      method: 'POST',
+      data: user,
+    })
+
     return {
       id: response.id,
       firstName: response.first_name,

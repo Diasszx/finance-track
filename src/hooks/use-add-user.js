@@ -10,8 +10,10 @@ export const useCreateUser = () => {
     mutationKey: userMutations.create(),
     mutationFn: (newUser) => UserService.signup(newUser),
     onSuccess: (createdUser) => {
+      console.log('LOGIN RESPONSE:', createdUser)
       const accessToken = createdUser.tokens.accessToken
       const refreshToken = createdUser.tokens.refreshToken
+
       setAcessToken(accessToken)
       setRefreshToken(refreshToken)
       toast.success('Usuário criado com sucesso!')
