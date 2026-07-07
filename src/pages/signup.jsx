@@ -3,6 +3,7 @@ import { Loader } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 
+import PasswordInput from '@/components/password-input'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -21,7 +22,6 @@ import {
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import PasswordInput from '@/components/ui/password-input'
 import { useAuthContext } from '@/context/auth'
 import { signupSchema } from '@/schemas/signup-schema'
 
