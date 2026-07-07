@@ -29,14 +29,16 @@ const DateSelection = () => {
   useEffect(() => {
     if (!date.from || !date.to) return
     const queryParams = new URLSearchParams()
-    queryParams.set('from', formatDateToQueryParam(date.from))
-    queryParams.set('to', formatDateToQueryParam(date.to))
+    const from = formatDateToQueryParam(date.from)
+    const to = formatDateToQueryParam(date.to)
+    queryParams.set('from', from)
+    queryParams.set('to', to)
     navigate(`/?${queryParams.toString()}`)
     queryClient.invalidateQueries({
       queryKey: usersQueryKeys.getBalance({
         userId: user.id,
-        from: date.from,
-        to: date.to,
+        from: from,
+        to: to,
       }),
     })
   }, [navigate, date, user.id, queryClient])
