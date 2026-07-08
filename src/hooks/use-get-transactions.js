@@ -12,6 +12,7 @@ export const useGetTransactions = ({ from, to }) => {
       from,
       to,
     }),
-    queryFn: TransactionService.getAll({ from, to }),
+    queryFn: () => TransactionService.getAll({ from, to }),
+    enabled: !!user?.id && !!from && !!to,
   })
 }

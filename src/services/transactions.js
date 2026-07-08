@@ -28,6 +28,6 @@ export const TransactionService = {
   getAll: async (input) => {
     const query = queryString.stringify({ from: input.from, to: input.to })
     const response = await protectedApiFetch(`/transactions/me?${query}`)
-    return response.data
+    return response
   },
 }

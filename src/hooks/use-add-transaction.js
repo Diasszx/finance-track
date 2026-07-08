@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 
 import { useAuthContext } from '@/context/auth'
 import { transactionMutations } from '@/keys/mutations'
-import { usersQueryKeys } from '@/keys/queries'
+import { transactionsQueryKeys, usersQueryKeys } from '@/keys/queries'
 import { TransactionService } from '@/services/transactions'
 
 export const useCreateTransaction = () => {
@@ -16,9 +16,11 @@ export const useCreateTransaction = () => {
       queryCliente.invalidateQueries({
         queryKey: usersQueryKeys.getBalanceRoot(user?.id),
       })
-      //        queryCliente.invalidateQueries({
-      //     queryKey: /* a key da lista de transações */,
-      //   })
+      queryCliente.invalidateQueries({
+        queryKey: transactionsQueryKeys.getTransactions({
+          userId: user.id,
+        }),
+      })
       toast.success('Transação criada com sucesso!')
     },
     onError: (error) => {
