@@ -3,6 +3,5 @@ export const usersQueryKeys = {
   getOne: (userId) => ['users', userId],
   getMe: () => ['users', 'me'],
   getBalanceRoot: (userId) => ['balance', userId],
-
   getBalance: ({ userId, from, to }) => ['balance', userId, { from, to }],
 }
