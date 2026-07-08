@@ -30,7 +30,7 @@ export function DataTable({ columns, data }) {
 
   return (
     <Table>
-      <TableHeader>
+      <TableHeader className="bg-muted">
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => {

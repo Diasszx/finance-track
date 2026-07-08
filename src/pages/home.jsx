@@ -6,6 +6,7 @@ import DateSelection from '@/components/date-selection'
 import Header from '@/components/header'
 import TransactionTable from '@/components/transaction-tables'
 import TrasactionDialog from '@/components/trasaction-dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { useAuthContext } from '@/context/auth'
 
 const HomePage = () => {
@@ -35,7 +36,14 @@ const HomePage = () => {
         <div className="grid grid-cols-[2fr,1fr]">
           <Balance />
         </div>
-        <TransactionTable />
+        <div className="overflow-hidden rounded-md border bg-card">
+          <div className="p-6">
+            <h3 className="text-base font-bold">Transações</h3>
+          </div>
+          <ScrollArea className="h-max-[450px] h-[450px]">
+            <TransactionTable />
+          </ScrollArea>
+        </div>
       </div>
     </div>
   )
