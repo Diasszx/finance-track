@@ -1,14 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   ExternalLink,
+  Loader,
   PiggyBank,
   Trash2,
   TrendingDown,
   TrendingUp,
 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 
+import { useEditTransaction } from '@/hooks/use-edit-transaction'
 import { editTransactionSchema } from '@/schemas/transaction-schema'
 
 import { Button } from './ui/button'
@@ -16,23 +19,54 @@ import { DatePicker } from './ui/date-picker'
 import { Field, FieldError, FieldGroup, FieldLabel } from './ui/field'
 import { Input } from './ui/input'
 import { Separator } from './ui/separator'
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from './ui/sheet'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTrigger,
+} from './ui/sheet'
 
 const EditTransactionButton = ({ transaction }) => {
+  const { mutateAsync: editTransactionMutation, isPending: isUpdating } =
+    useEditTransaction()
+  const [open, setOpen] = useState(false)
   const form = useForm({
     resolver: zodResolver(editTransactionSchema),
     defaultValues: {
       name: transaction.name,
       amount: transaction.amount,
-      date: transaction.date,
+      date: transaction.date ? new Date(transaction.date) : undefined,
       type: transaction.type,
       id: transaction.id,
     },
   })
+  useEffect(() => {
+    if (open) {
+      form.reset({
+        id: transaction.id,
+        name: transaction.name,
+        amount: transaction.amount,
+        date: new Date(transaction.date),
+        type: transaction.type,
+      })
+      form.setValue('id', transaction.id)
+    }
+  }, [open, transaction, form])
 
-  const onSubmit = async () => {}
+  const onSubmit = async (data) => {
+    try {
+      await editTransactionMutation(data)
+      form.reset()
+      setOpen(false)
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="text-muted-foreground">
           {<ExternalLink />}
@@ -43,7 +77,9 @@ const EditTransactionButton = ({ transaction }) => {
         <Separator />
         <form
           id="form-update-transaction"
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit, (errors) => {
+            console.log('ERROS DO FORM:', errors)
+          })}
         >
           <FieldGroup className="gap-2">
             <Controller
@@ -104,7 +140,10 @@ const EditTransactionButton = ({ transaction }) => {
                   <FieldLabel htmlFor="form-transaction-date">Data</FieldLabel>
                   <DatePicker
                     value={field.value}
-                    onChange={field.onChange}
+                    onChange={(date) => {
+                      console.log(date)
+                      field.onChange(date)
+                    }}
                     id="form-transaction-date"
                     type="date"
                   />
@@ -170,18 +209,40 @@ const EditTransactionButton = ({ transaction }) => {
               )}
             />
           </FieldGroup>
-        </form>
-        <div className="flex justify-end">
-          <div className="flex items-center gap-1 text-primary-red">
-            <Button
-              variant="ghost"
-              className="px-1 text-xs font-bold text-primary-red"
-            >
-              Deletar Transação
-              <Trash2 size={16} />
-            </Button>
+          <div className="flex justify-end">
+            <div className="flex items-center gap-1 text-primary-red">
+              <Button
+                variant="ghost"
+                className="px-1 text-xs font-bold text-primary-red"
+              >
+                Deletar Transação
+                <Trash2 size={16} />
+              </Button>
+            </div>
           </div>
-        </div>
+          <SheetFooter className="grid grid-cols-2 gap-3">
+            <SheetClose asChild>
+              <Button
+                className="w-full rounded-md bg-card px-4 py-2"
+                variant="outline"
+                disabled={isUpdating}
+              >
+                Cancelar
+              </Button>
+            </SheetClose>
+            <Button
+              className="w-full rounded-md px-4 py-2"
+              type="submit"
+              disabled={isUpdating}
+            >
+              {isUpdating ? (
+                <Loader className="animate-spin text-white" />
+              ) : (
+                'Salvar'
+              )}
+            </Button>
+          </SheetFooter>
+        </form>
       </SheetContent>
     </Sheet>
   )

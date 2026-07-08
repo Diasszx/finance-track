@@ -6,27 +6,28 @@ import { transactionMutations } from '@/keys/mutations'
 import { transactionsQueryKeys, usersQueryKeys } from '@/keys/queries'
 import { TransactionService } from '@/services/transactions'
 
-export const useEditTransaction = () => {
+export const useCreateTransaction = () => {
   const { user } = useAuthContext()
   const queryCliente = useQueryClient()
   return useMutation({
-    mutationKey: transactionMutations.update({ userId: user?.id }),
-    mutationFn: (updatedTransaction) =>
-      TransactionService.update(updatedTransaction),
+    mutationKey: transactionMutations.delete({ userId: user?.id }),
+    mutationFn: (deletedTransaction) =>
+      TransactionService.delete(deletedTransaction),
     onSuccess: () => {
       queryCliente.invalidateQueries({
         queryKey: usersQueryKeys.getBalanceRoot(user?.id),
       })
       queryCliente.invalidateQueries({
-        queryKey: transactionsQueryKeys.getTransactionsRoot({
+        queryKey: transactionsQueryKeys.getTransactions({
           userId: user.id,
         }),
       })
-      toast.success('Transação atualizada com sucesso!')
+      toast.success('Transação deletada com sucesso!')
     },
     onError: (error) => {
       toast.error(
-        error.message || 'Erro ao editar transação. Por favor, Tente novamente.'
+        error.message ||
+          'Erro ao deletar transação. Por favor, Tente novamente.'
       )
     },
   })

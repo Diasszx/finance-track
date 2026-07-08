@@ -12,4 +12,5 @@ export const transactionsQueryKeys = {
     userId,
     { from, to },
   ],
+  getTransactionsRoot: ({ userId }) => ['transactions', userId],
 }

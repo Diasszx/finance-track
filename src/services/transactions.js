@@ -57,4 +57,15 @@ export const TransactionService = {
     })
     return response
   },
+  /**
+   * Delete uma transação do usuário autenticado
+   * @param {object} input - Dados da transação
+   * @param {string} input.id - ID da transação
+   */
+  delete: async (input) => {
+    const response = await protectedApiFetch(`/transactions/me/${input.id}`, {
+      method: 'DELETE',
+    })
+    return response
+  },
 }
