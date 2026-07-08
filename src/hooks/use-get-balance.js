@@ -6,6 +6,7 @@ import { UserService } from '@/services/users'
 
 export const useGetBalance = ({ from, to }) => {
   const { user } = useAuthContext()
+
   return useQuery({
     queryKey: usersQueryKeys.getBalance({
       userId: user?.id,

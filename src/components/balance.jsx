@@ -11,6 +11,7 @@ const Balance = () => {
   const to = searchParams.get('to')
 
   const { data: balance, isLoading } = useGetBalance({ from, to })
+
   if (isLoading) return <p>Carregando....</p>
 
   return (
