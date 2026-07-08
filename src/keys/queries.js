@@ -5,3 +5,11 @@ export const usersQueryKeys = {
   getBalanceRoot: (userId) => ['balance', userId],
   getBalance: ({ userId, from, to }) => ['balance', userId, { from, to }],
 }
+
+export const transactionsQueryKeys = {
+  getTransactions: ({ userId, from, to }) => [
+    'transactions',
+    userId,
+    { from, to },
+  ],
+}
