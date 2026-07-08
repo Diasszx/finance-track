@@ -10,3 +10,7 @@ export const transactionSchema = z.object({
     message: 'O tipo é obrigatório',
   }),
 })
+
+export const editTransactionSchema = transactionSchema.extend({
+  id: z.string().uuid(),
+})

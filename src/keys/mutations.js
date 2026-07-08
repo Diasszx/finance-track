@@ -5,4 +5,5 @@ export const userMutations = {
 
 export const transactionMutations = {
   create: ({ userId }) => ['add-transaction', userId],
+  update: ({ userId }) => ['edit-transaction', userId],
 }
