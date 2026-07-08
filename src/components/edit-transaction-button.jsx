@@ -3,7 +3,6 @@ import {
   ExternalLink,
   Loader,
   PiggyBank,
-  Trash2,
   TrendingDown,
   TrendingUp,
 } from 'lucide-react'
@@ -14,6 +13,7 @@ import { NumericFormat } from 'react-number-format'
 import { useEditTransaction } from '@/hooks/use-edit-transaction'
 import { editTransactionSchema } from '@/schemas/transaction-schema'
 
+import DeleteTransactionAlertDialog from './delete-transaction-alert-dialog'
 import { Button } from './ui/button'
 import { DatePicker } from './ui/date-picker'
 import { Field, FieldError, FieldGroup, FieldLabel } from './ui/field'
@@ -28,7 +28,7 @@ import {
   SheetTrigger,
 } from './ui/sheet'
 
-const EditTransactionButton = ({ transaction }) => {
+const EditTransactionButton = ({ transaction, onDeleted }) => {
   const { mutateAsync: editTransactionMutation, isPending: isUpdating } =
     useEditTransaction()
   const [open, setOpen] = useState(false)
@@ -56,8 +56,16 @@ const EditTransactionButton = ({ transaction }) => {
   }, [open, transaction, form])
 
   const onSubmit = async (data) => {
+    const input = {
+      id: data.id,
+      name: data.title,
+      amount: data.amount,
+      date: data.date,
+      type: data.type,
+    }
+
     try {
-      await editTransactionMutation(data)
+      await editTransactionMutation(input)
       form.reset()
       setOpen(false)
       console.log(data)
@@ -210,15 +218,13 @@ const EditTransactionButton = ({ transaction }) => {
             />
           </FieldGroup>
           <div className="flex justify-end">
-            <div className="flex items-center gap-1 text-primary-red">
-              <Button
-                variant="ghost"
-                className="px-1 text-xs font-bold text-primary-red"
-              >
-                Deletar Transação
-                <Trash2 size={16} />
-              </Button>
-            </div>
+            <DeleteTransactionAlertDialog
+              transactionId={transaction.id}
+              onDeleted={() => {
+                setOpen(false)
+                onDeleted()
+              }}
+            />
           </div>
           <SheetFooter className="grid grid-cols-2 gap-3">
             <SheetClose asChild>

@@ -17,7 +17,7 @@ export const useCreateTransaction = () => {
         queryKey: usersQueryKeys.getBalanceRoot(user?.id),
       })
       queryCliente.invalidateQueries({
-        queryKey: transactionsQueryKeys.getTransactions({
+        queryKey: transactionsQueryKeys.getTransactionsRoot({
           userId: user.id,
         }),
       })

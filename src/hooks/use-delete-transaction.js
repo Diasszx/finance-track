@@ -6,7 +6,7 @@ import { transactionMutations } from '@/keys/mutations'
 import { transactionsQueryKeys, usersQueryKeys } from '@/keys/queries'
 import { TransactionService } from '@/services/transactions'
 
-export const useCreateTransaction = () => {
+export const useDeleteTransaction = () => {
   const { user } = useAuthContext()
   const queryCliente = useQueryClient()
   return useMutation({
@@ -18,7 +18,7 @@ export const useCreateTransaction = () => {
         queryKey: usersQueryKeys.getBalanceRoot(user?.id),
       })
       queryCliente.invalidateQueries({
-        queryKey: transactionsQueryKeys.getTransactions({
+        queryKey: transactionsQueryKeys.getTransactionsRoot({
           userId: user.id,
         }),
       })
