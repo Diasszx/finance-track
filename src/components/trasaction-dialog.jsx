@@ -51,7 +51,7 @@ const TrasactionDialog = () => {
         date: data.date,
         type: data.type,
       }
-
+      console.log(input)
       await createTransactionMutation(input)
       form.reset()
       setOpen(false)

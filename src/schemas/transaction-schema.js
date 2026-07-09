@@ -11,6 +11,14 @@ export const transactionSchema = z.object({
   }),
 })
 
-export const editTransactionSchema = transactionSchema.extend({
+export const editTransactionSchema = z.object({
+  name: z.string().min(1, {
+    message: 'O nome é obrigatório',
+  }),
+  amount: z.coerce.number().min(0.1, { message: 'O valor é obrigatório' }),
+  date: z.date({ message: 'A data é obrigatória' }),
+  type: z.enum(['EARNING', 'EXPENSE', 'INVESTMENT'], {
+    message: 'O tipo é obrigatório',
+  }),
   id: z.string().uuid(),
 })
