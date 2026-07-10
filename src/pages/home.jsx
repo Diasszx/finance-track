@@ -28,9 +28,9 @@ const HomePage = () => {
       <Header />
 
       <main className="mx-auto w-full space-y-6 p-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <h2 className="text-2xl font-bold">Dashboard</h2>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center">
             <DateSelection />
             <TrasactionDialog />
           </div>
@@ -42,8 +42,12 @@ const HomePage = () => {
           <div className="p-6">
             <h3 className="text-base font-bold">Transações</h3>
           </div>
-          <ScrollArea className="h-max-[450px] h-[450px]">
-            <TransactionTable />
+          <ScrollArea className="h-[450px]">
+            <div className="min-w-[700px]">
+              <div className="overflow-x-auto">
+                <TransactionTable />
+              </div>
+            </div>
           </ScrollArea>
         </div>
       </main>
