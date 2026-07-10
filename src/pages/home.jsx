@@ -21,19 +21,21 @@ const HomePage = () => {
 
   if (isInitializing) return null
   if (!user) return null
+  //  /main*px-4 py-6 sm:px-6 lg:px-8*/
 
   return (
-    <div className="bg-background">
+    <div className="min-h-screen overflow-x-hidden bg-background">
       <Header />
-      <div className="space-y-6 p-8">
-        <div className="flex items-center justify-between">
+
+      <main className="mx-auto w-full space-y-6 p-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-2xl font-bold">Dashboard</h2>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <DateSelection />
             <TrasactionDialog />
           </div>
         </div>
-        <div className="grid grid-cols-[2fr,1fr]">
+        <div className="">
           <Balance />
         </div>
         <div className="overflow-hidden rounded-md border bg-card">
@@ -44,7 +46,7 @@ const HomePage = () => {
             <TransactionTable />
           </ScrollArea>
         </div>
-      </div>
+      </main>
     </div>
   )
 }

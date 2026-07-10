@@ -4,7 +4,7 @@ import { Card, CardContent } from './ui/card'
 
 const BalanceItem = ({ label, icon, amount }) => {
   return (
-    <Card>
+    <Card className="w-full">
       <CardContent className="space-y-2 p-6">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">

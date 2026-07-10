@@ -15,7 +15,7 @@ const Balance = () => {
   if (isLoading) return <p>Carregando....</p>
 
   return (
-    <div className="grid grid-cols-2 grid-rows-2 gap-6">
+    <div className="flex w-full flex-wrap gap-6 md:grid md:grid-cols-2 md:grid-rows-2">
       <BalanceItem
         label="Saldo"
         icon={<WalletIcon size={16} />}
