@@ -166,7 +166,7 @@ const EditTransactionButton = ({ transaction, onDeleted }) => {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field className="mt-6">
-                  <div className="flex gap-5">
+                  <div className="flex flex-col gap-4 md:flex-row md:gap-5">
                     <Button
                       type="button"
                       variant="outline"
