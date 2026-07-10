@@ -55,7 +55,7 @@ const SignupPage = () => {
   }
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-3">
-      <Card className="max-h-[85vh] w-[500px] overflow-y-auto">
+      <Card className="max-h-[85vh] w-4/5 overflow-y-auto md:w-[500px]">
         <CardHeader className="items-center">
           <CardTitle>Crie a sua conta</CardTitle>
           <CardDescription>Insira seus dados abaixo.</CardDescription>
