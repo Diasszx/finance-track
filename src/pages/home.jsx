@@ -6,7 +6,7 @@ import DateSelection from '@/components/date-selection'
 import Header from '@/components/header'
 import TransactionTable from '@/components/transaction-tables'
 import TrasactionDialog from '@/components/trasaction-dialog'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { useAuthContext } from '@/context/auth'
 
 const HomePage = () => {
@@ -42,12 +42,9 @@ const HomePage = () => {
           <div className="p-6">
             <h3 className="text-base font-bold">Transações</h3>
           </div>
-          <ScrollArea className="h-[450px]">
-            <div className="min-w-[700px]">
-              <div className="overflow-x-auto">
-                <TransactionTable />
-              </div>
-            </div>
+          <ScrollArea className="h-[450px] w-full">
+            <TransactionTable />
+            <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </div>
       </main>
