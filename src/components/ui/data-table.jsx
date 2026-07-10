@@ -29,7 +29,7 @@ export function DataTable({ columns, data }) {
   })
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full min-w-0 overflow-x-auto">
       <Table className="min-w-[700px]">
         <TableHeader className="bg-muted">
           {table.getHeaderGroups().map((headerGroup) => (
