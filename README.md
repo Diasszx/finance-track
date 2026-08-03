@@ -18,10 +18,6 @@ Deploy
 
 https://finance-track-eta-five.vercel.app/
 
-Backend
-
-https://github.com/Diasszx/finance-app-api
-
 ---
 
 # Preview
