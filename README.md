@@ -1,4 +1,4 @@
-# Finance Track
+# Finance Track Web
 
 Aplicação web Full Stack para gerenciamento financeiro pessoal, permitindo o controle de receitas, despesas e investimentos através de uma interface moderna e integrada a uma API REST desenvolvida em Node.js.
 
