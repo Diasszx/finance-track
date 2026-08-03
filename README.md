@@ -5,6 +5,12 @@ Aplicação web Full Stack para gerenciamento financeiro pessoal, permitindo o c
 > Este projeto foi desenvolvido com foco em escalabilidade, componentização, experiência do usuário e boas práticas de desenvolvimento Frontend.
 
 ---
+## Repositórios do Projeto
+
+| Projeto | Descrição |
+|---------|-----------|
+| 🖥️ **Frontend** | https://github.com/Diasszx/finance-track-web |
+| ⚙️ **Backend** | https://github.com/Diasszx/finance-track-api |
 
 # Demonstração
 
